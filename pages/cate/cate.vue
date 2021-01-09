@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<my-search @click="gotoSearch"></my-search>
 		<view class="scroll-view-container">
 			<!-- 一级分类 -->
 			<scroll-view scroll-y="true" class="left-scroll-view" :style="{height: windowHeight + 'px'}">
@@ -10,7 +11,7 @@
 			</scroll-view>
 			<!-- 右侧滚动视图区域 -->
 			<scroll-view scroll-y="true" class="right-scroll-view" :style="{height: windowHeight + 'px'}" :scroll-top="scrollTop">
-				<view class="cate-lv2" v-for="(item2,index2) in cateLevel2">
+				<view class="cate-lv2" v-for="(item2,index2) in cateLevel2" :key="index2">
 					<view class="cate-lv2-title">/ {{item2.cat_name}} /</view>
 					<!-- 动态渲染三级分类的列表数据 -->
 					    <view class="cate-lv3-list">
@@ -43,7 +44,7 @@
 		      // 获取当前系统的信息
 		      const sysInfo = uni.getSystemInfoSync()
 		      // 为 wh 窗口可用高度动态赋值
-		      this.windowHeight = sysInfo.windowHeight
+		      this.windowHeight = sysInfo.windowHeight - 50
 			  
 			  this.getCateList()
 		    },
@@ -64,7 +65,12 @@
 					uni.navigateTo({
 						url:'/subpkg/goods_list/goods_list?cid=' + item.cat_id
 					})
-				}
+				},
+				 gotoSearch() {
+				     uni.navigateTo({
+				       url: '/subpkg/search/search'
+				     })
+				   }
 			},
 	}
 </script>

@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<view class="search-box">			
+		<my-search @click="gotoSearch"></my-search>
+		</view>
 		<view>
 			<!-- 轮播图 -->
 			<swiper :indicator-dots="true" :autoplay="true" :interval="2000" :duration="1000" circular>
@@ -106,7 +109,12 @@
 						url: '../cate/cate'
 					})
 				}
-			}
+			},
+			 gotoSearch() {
+			     uni.navigateTo({
+			       url: '/subpkg/search/search'
+			     })
+			   }
 		}
 	}
 </script>
@@ -147,5 +155,14 @@
 	.floor-img-box {
 	  display: flex;
 	  padding-left: 10rpx;
+	}
+	
+	.search-box {
+	  // 设置定位效果为“吸顶”
+	  position: sticky;
+	  // 吸顶的“位置”
+	  top: 0;
+	  // 提高层级，防止被轮播图覆盖
+	  z-index: 999;
 	}
 </style>
