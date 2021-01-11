@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view class="search-box">			
-		<my-search @click="gotoSearch"></my-search>
+		<view class="search-box">
+			<my-search @click="gotoSearch"></my-search>
 		</view>
 		<view>
 			<!-- 轮播图 -->
@@ -29,24 +29,14 @@
 					<view class="floor-img-box">
 						<!-- 左边长图片 -->
 						<navigator class="left-img-box" :url="item.product_list[0].url">
-							<image 
-							:src="item.product_list[0].image_src" 
-							mode="widthFix" 
-							:style="{width: item.product_list[0].image_width + 'rpx'}">
+							<image :src="item.product_list[0].image_src" mode="widthFix" :style="{width: item.product_list[0].image_width + 'rpx'}">
 							</image>
 						</navigator>
 						<!-- 右边小图片 -->
 						<view class="right-img-box">
-							<navigator class="right-img-item" 
-							v-for="(item2, index2) in item.product_list" 
-							:key="index2" 
-							v-if="index2 !== 0"
-							:url="item2.url"
-							>	
-								<image 
-								:src="item2.image_src" 
-								mode="widthFix" 
-								:style="{width: item2.image_width + 'rpx'}">
+							<navigator class="right-img-item" v-for="(item2, index2) in item.product_list" :key="index2" v-if="index2 !== 0"
+							 :url="item2.url">
+								<image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}">
 								</image>
 							</navigator>
 						</view>
@@ -59,7 +49,9 @@
 </template>
 
 <script>
+		import badgeMix from '@/mixins/tabbar-badge.js'
 	export default {
+		mixins: [badgeMix],
 		data() {
 			return {
 				swiperList: [],
@@ -95,12 +87,12 @@
 					data: res
 				} = await uni.$http.get('/api/public/v1/home/floordata')
 				if (res.meta.status !== 200) return uni.$showMsg()
-				 // 通过双层 forEach 循环，处理 URL 地址
-				  res.message.forEach(floor => {
-				    floor.product_list.forEach(prod => {
-				      prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1]
-				    })
-				  })
+				// 通过双层 forEach 循环，处理 URL 地址
+				res.message.forEach(floor => {
+					floor.product_list.forEach(prod => {
+						prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1]
+					})
+				})
 				this.floorList = res.message
 			},
 			navClickHandler(item) {
@@ -110,11 +102,11 @@
 					})
 				}
 			},
-			 gotoSearch() {
-			     uni.navigateTo({
-			       url: '/subpkg/search/search'
-			     })
-			   }
+			gotoSearch() {
+				uni.navigateTo({
+					url: '/subpkg/search/search'
+				})
+			}
 		}
 	}
 </script>
@@ -145,24 +137,24 @@
 		height: 60rpx;
 		width: 100%;
 	}
-	
+
 	.right-img-box {
-	  display: flex;
-	  flex-wrap: wrap;
-	  justify-content: space-around;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
 	}
-	
+
 	.floor-img-box {
-	  display: flex;
-	  padding-left: 10rpx;
+		display: flex;
+		padding-left: 10rpx;
 	}
-	
+
 	.search-box {
-	  // 设置定位效果为“吸顶”
-	  position: sticky;
-	  // 吸顶的“位置”
-	  top: 0;
-	  // 提高层级，防止被轮播图覆盖
-	  z-index: 999;
+		// 设置定位效果为“吸顶”
+		position: sticky;
+		// 吸顶的“位置”
+		top: 0;
+		// 提高层级，防止被轮播图覆盖
+		z-index: 999;
 	}
 </style>

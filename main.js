@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import { $http } from '@escook/request-miniprogram'
+import store from './store/store.js'
 
 Vue.config.productionTip = false
 
@@ -28,6 +29,7 @@ uni.$showMsg = function(title = "数据加载失败", duration = 1500) {
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+	store
 })
 app.$mount()

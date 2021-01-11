@@ -57,9 +57,12 @@
 				this.inputValue = +val;
 			},
 			inputValue(newVal, oldVal) {
-				if (+newVal !== +oldVal) {
-					this.$emit("change", newVal);
-				}
+				// if (+newVal !== +oldVal) {
+				// 	this.$emit("change", newVal);
+				// }
+				 if (+newVal !== +oldVal && Number(newVal) && String(newVal).indexOf('.') === -1) {
+				    this.$emit("change", newVal);
+				  }
 			}
 		},
 		created() {
@@ -102,7 +105,15 @@
 				return scale;
 			},
 			_onBlur(event) {
-				let value = event.detail.value;
+				// let value = event.detail.value;
+				// 将用户输入的内容转化为整数
+				  let value = parseInt(event.detail.value);
+				
+				  if (!value) {
+				    // 如果转化之后的结果为 NaN，则给定默认值为 1
+				    this.inputValue = 1;
+				    return;
+				  }
 				if (!value) {
 					// this.inputValue = 0;
 					return;
